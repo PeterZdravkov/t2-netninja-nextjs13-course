@@ -2,8 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 
-/** Components */
-import Navbar from "@/components/Navbar";
 import React from "react";
 
 const rubik = Rubik({ subsets: ["latin"] });
@@ -22,7 +20,6 @@ export default function RootLayout({
     <html lang="en">
       <React.StrictMode>
         <body className={rubik.className}>
-          <Navbar />
           {children}
         </body>
       </React.StrictMode>
