@@ -26,7 +26,7 @@ const Login = () => {
     }
 
     if (!error) {
-      router.push(`${location.origin}/tickets`);
+      router.push(`${location.origin}`);
     }
   };
 
