@@ -22,10 +22,11 @@ const Login = () => {
 
     if (error) {
       setError(error.message);
+      console.log(error.message)
     }
 
     if (!error) {
-      router.push(`${location.origin}`);
+      router.push(`${location.origin}/tickets`);
     }
   };
 
