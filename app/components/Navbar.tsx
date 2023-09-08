@@ -1,16 +1,10 @@
-'use client'
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import Logo from "@/public/next.svg";
 import LogoutButton from "./LogoutButton";
-import { useRouter } from "next/navigation";
 
 const Navbar = ({ user }: any) => {
-  const router = useRouter();
-  useEffect(() => {
-    router.refresh();
-  }, []);
 
   return (
     <nav>
