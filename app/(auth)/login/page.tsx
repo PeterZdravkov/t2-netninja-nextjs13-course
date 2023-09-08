@@ -26,7 +26,7 @@ const Login = () => {
     }
 
     if (!error) {
-      router.push(`${location.origin}/verify`);
+      router.push(`${location.origin}/`);
     }
   };
 
