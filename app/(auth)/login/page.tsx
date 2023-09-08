@@ -25,7 +25,7 @@ const Login = () => {
     }
 
     if (!error) {
-      router.push("/");
+      router.push(`${location.origin}`);
     }
   };
 
