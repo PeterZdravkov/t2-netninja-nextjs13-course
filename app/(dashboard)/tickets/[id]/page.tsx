@@ -1,42 +1,52 @@
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-export const dynamicParams = true;
+import DeleteButton from "./DeleteButton";
 
 export async function generateMetadata({ params }: any) {
-  const id = params.id;
-  const res = await fetch(`http://localhost:4000/tickets/${id}`);
-  const ticket = await res.json();
-  return { title: `Helpdesk | ${ticket.title}` };
-}
+  const supabase = createServerComponentClient({ cookies });
+  const { data: ticket, error }: any = await supabase
+    .from("Tickets")
+    .select()
+    .eq("id", params.id)
+    .single();
 
-export async function generateStaticParams() {
-  const response = await fetch("http://localhost:4000/tickets");
+  if (error) console.log(error.message);
 
-  const tickets = await response.json();
-
-  return tickets.map((ticket: any) => ({ id: ticket.id }));
+  return { title: `Helpdesk | ${ticket?.title || "Ticket not found"}` };
 }
 
 const getTicket = async (id: any) => {
-  const response = await fetch(`http://localhost:4000/tickets/${id}`, {
-    next: {
-      revalidate: 60 /** if this is zero, it makes static route generation redundant */,
-    },
-  });
+  const supabase = createServerComponentClient({ cookies });
+  const { data }: any = await supabase
+    .from("Tickets")
+    .select()
+    .eq("id", id)
+    .single();
 
-  if (!response.ok) {
+  if (!data) {
     notFound();
   }
 
-  return response.json();
+  return data;
 };
 
 const TicketDetails = async ({ params }: any) => {
   const ticket = await getTicket(params.id);
 
+  const supabase = createServerComponentClient({ cookies });
+  const userEmail = (await supabase.auth.getSession()).data.session?.user.email;
+
   return (
     <main>
-      <nav></nav>
-      <h2>Ticket Details</h2>
+      <nav>
+        <h2>Ticket Details</h2>
+        <div className="ml-auto">
+          {userEmail === ticket.user_email && (
+            <DeleteButton id={ticket.id} />
+          )}
+        </div>
+      </nav>
       <div className="card">
         <h3>{ticket.title}</h3>
         <small>Created by {ticket.user_email}</small>

@@ -1,16 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { setPriority } from "os";
 import { useState } from "react";
 
 const CreateForm = () => {
-  const router = useRouter();
-
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [priority, setPriority] = useState("low");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -20,10 +18,9 @@ const CreateForm = () => {
       title,
       body,
       priority,
-      user_email: "mario@netninja.dev",
     };
 
-    const response = await fetch("http://localhost:4000/tickets", {
+    const response = await fetch("/api/tickets", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +28,10 @@ const CreateForm = () => {
       body: JSON.stringify(ticket),
     });
 
-    if (response.status === 201) {
+    const json = await response.json();
+
+    if (json.error) console.log(json.error.message);
+    if (json.data) {
       router.refresh();
       router.push("/tickets");
     }

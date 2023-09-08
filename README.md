@@ -1,4 +1,4 @@
 Net Ninja course repository
 
-NextJS13
+NextJS 13
 Supabase Auth & Store
