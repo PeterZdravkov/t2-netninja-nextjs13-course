@@ -19,12 +19,6 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="my-8 flex justify-center">
-        <Link href="/tickets/create">
-          <button className="btn-primary w-">Create a Ticket</button>
-        </Link>
-      </div>
-
       <h2>Company Updates</h2>
 
       <div className="card">

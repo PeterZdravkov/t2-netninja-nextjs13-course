@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import LayoutContextProvider from "@/app/contexts/LayoutContextProvider";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const supabase = createServerComponentClient({ cookies });
@@ -15,7 +16,8 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar user={data.session?.user} />
-      {children}
+
+      <LayoutContextProvider>{children}</LayoutContextProvider>
     </>
   );
 };

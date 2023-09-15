@@ -16,7 +16,7 @@ export async function POST(request: any) {
     data: { session },
   }: any = await supabase.auth.getSession();
 
-  //insert data into supabase
+  //insert a single ticket into supabase
   const { data, error } = await supabase
     .from("Tickets")
     .insert({
@@ -27,4 +27,13 @@ export async function POST(request: any) {
     .single();
 
   return NextResponse.json({ data, error });
+}
+
+export async function GET(request: Request) {
+    const supabase = createRouteHandlerClient({ cookies });
+    const { data, error } = await supabase.from("Tickets").select();
+
+    if (error) console.log(error.message);
+
+    return NextResponse.json(data);
 }
