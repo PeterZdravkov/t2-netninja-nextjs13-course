@@ -58,16 +58,14 @@ const Login = () => {
           </div>
         </button>
       </div>
-      <div className="relative">
-        <div className="absolute inset-x-0 top-[55vh] flex items-center justify-center gap-4">
-          <h2 className="">Don&apos;t have an account?</h2>
-          <button
-            className="btn-primary justify-center"
-            onClick={() => router.push("/signup")}
-          >
-            Sign up
-          </button>
-        </div>
+      <div className="absolute inset-x-0 bottom-10 flex items-center justify-center gap-4">
+        <h2 className="">Don&apos;t have an account?</h2>
+        <button
+          className="btn-primary justify-center"
+          onClick={() => router.push("/signup")}
+        >
+          Sign up
+        </button>
       </div>
     </main>
   );

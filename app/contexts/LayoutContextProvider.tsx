@@ -1,11 +1,15 @@
 "use client";
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
 
 export const LayoutContext = createContext<any>(null);
 
-const LayoutContextProvider = ({ children }: any) => {
+const LayoutContextProvider = ({ children, userSettings }: any) => {
   const [activeLayout, setActiveLayout] = useState(tabs[0].id);
+
+  useEffect(() => {
+    setActiveLayout(userSettings.layout);
+  }, [userSettings.layout]);
 
   return (
     <LayoutContext.Provider value={{ tabs, activeLayout, setActiveLayout }}>
@@ -25,7 +29,7 @@ let tabs: tabs[] = [
     icon: (
       <TbLayoutList
         size={24}
-        className="duration-2500 text-white transition ease-in-out hover:text-primary"
+        className="duration-2500 text-white transition ease-in-out hover:text-slate-200"
       />
     ),
   },
@@ -34,7 +38,7 @@ let tabs: tabs[] = [
     icon: (
       <TbLayoutGrid
         size={24}
-        className="duration-2500 text-white transition ease-in-out hover:text-primary"
+        className="duration-2500 text-white transition ease-in-out hover:text-slate-200"
       />
     ),
   },

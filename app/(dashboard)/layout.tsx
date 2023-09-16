@@ -13,11 +13,21 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     redirect("/login");
   }
 
+  const { data: userSettings, error } = await supabase
+    .from("user_settings")
+    .select()
+    .match({ id: data.session?.user.id })
+    .single();
+
+  if (error) console.log(error);
+
   return (
     <>
       <Navbar user={data.session?.user} />
 
-      <LayoutContextProvider>{children}</LayoutContextProvider>
+      <LayoutContextProvider userSettings={userSettings}>
+        {children}
+      </LayoutContextProvider>
     </>
   );
 };
